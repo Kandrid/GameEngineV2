@@ -123,27 +123,16 @@ namespace GameEngineV2
             return Math.Sqrt(dx * dx + dy * dy);
         }
 
-        Nbody sun, earth, venus, mercury, mars, b;
-
         public void Initialise()
         {
             LoadMap("large.cmap");
             DEBUG_MODE = Debug.Partial;
-            FRAMERATE = 60;
-            //CAMERA.Width = 234;
-            //CAMERA.Height = 110;
-            //CAMERA.X = 0;
-            //CAMERA.Y = MAP_HEIGHT / 3;
+            FRAMERATE = 30;
             Nbody.timestep = 2147483648;
             Nbody.scale = 3 * Nbody.lightyear / MAP_HEIGHT;
-            //sun = new Nbody('S', MAP_WIDTH / 2, MAP_HEIGHT / 2, 0, 0, Nbody.solarmass);
-            //earth = new Nbody('E', (MAP_WIDTH / 2) * Nbody.scale + 1.495e11, (MAP_HEIGHT / 2) * Nbody.scale, 0, 29780, 5.972e24, false);
-            //venus = new Nbody('V', (MAP_WIDTH / 2) * Nbody.scale - 1.08e11, (MAP_HEIGHT / 2) * Nbody.scale, 0, -35020, 4.8675e24, false);
-            //mercury = new Nbody('m', (MAP_WIDTH / 2) * Nbody.scale + 5.7909e10, (MAP_HEIGHT / 2) * Nbody.scale, 0, 47362, 3.3011e23, false);
-            //mars = new Nbody('M', (MAP_WIDTH / 2) * Nbody.scale - 2.279392e11, (MAP_HEIGHT / 2) * Nbody.scale, 0, -24007, 6.4171e23, false);
             new Nbody('%', MAP_WIDTH / 2 + 20, MAP_HEIGHT / 2, 0, 7e4, Nbody.solarmass * 1000000);
             new Nbody('%', MAP_WIDTH / 2 - 20, MAP_HEIGHT / 2, 0, -7e4, Nbody.solarmass * 1000000);
-            for (int i = 0; i < 0; i++)
+            for (int i = 0; i < 3000; i++)
             {
               new Nbody('.', random.NextDouble() * MAP_WIDTH, random.NextDouble() * MAP_HEIGHT, 0, 0, Nbody.solarmass);
             }
@@ -153,33 +142,20 @@ namespace GameEngineV2
 
         public void GameExecute()
         {
+            List<Nbody> trash = new List<Nbody>();
             Nbody.Update();
-            start:
+
             foreach (Nbody n in Nbody.bodies)
             {
-                if (n.rx < 0)
+                if (n.rx <= Nbody.scale || n.rx >= (MAP_WIDTH - 1) * Nbody.scale || n.ry <= Nbody.scale || n.ry >= (MAP_HEIGHT - 1) * Nbody.scale - 1)
                 {
-                    n.Remove();
-                    goto start;
-                    //n.vx = Math.Abs(n.vx);
-                } else if (n.rx > MAP_WIDTH * Nbody.scale)
-                {
-                    n.Remove();
-                    goto start;
-                    //n.vx = -Math.Abs(n.vx);
+                    trash.Add(n);
                 }
-                if (n.ry < 0)
-                {
-                    n.Remove();
-                    goto start;
-                    //n.vy = Math.Abs(n.vy);
-                }
-                else if (n.ry > MAP_HEIGHT * Nbody.scale)
-                {
-                    n.Remove();
-                    goto start;
-                    //n.vy = -Math.Abs(n.vy);
-                }
+            }
+
+            foreach (Nbody n in trash)
+            {
+                n.Remove();
             }
 
             switch (INPUT)
@@ -218,9 +194,6 @@ namespace GameEngineV2
 
             customDebugVariables.Add("Time Step", Nbody.timestep);
             customDebugVariables.Add("Scale", Nbody.scale);
-            //customDebugVariables.Add("Earth Distance from Sun", distance(sun, earth));
-            //customDebugVariables.Add("Moon Distance from Earth", distance(moon, earth));
-            //customDebugVariables.Add("Earth Velocity", Math.Sqrt(earth.vx * earth.vx + earth.vy * earth.vy));
             customDebugVariables.Add("Time Ratio Per 1 Second", Nbody.timestep * FRAMERATE_NOW);
         }
     }
