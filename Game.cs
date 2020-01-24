@@ -143,7 +143,7 @@ namespace GameEngineV2
             //mars = new Nbody('M', (MAP_WIDTH / 2) * Nbody.scale - 2.279392e11, (MAP_HEIGHT / 2) * Nbody.scale, 0, -24007, 6.4171e23, false);
             new Nbody('%', MAP_WIDTH / 2 + 20, MAP_HEIGHT / 2, 0, 7e4, Nbody.solarmass * 1000000);
             new Nbody('%', MAP_WIDTH / 2 - 20, MAP_HEIGHT / 2, 0, -7e4, Nbody.solarmass * 1000000);
-            for (int i = 0; i < 5000; i++)
+            for (int i = 0; i < 0; i++)
             {
               new Nbody('.', random.NextDouble() * MAP_WIDTH, random.NextDouble() * MAP_HEIGHT, 0, 0, Nbody.solarmass);
             }

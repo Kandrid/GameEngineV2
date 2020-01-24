@@ -84,6 +84,7 @@ namespace GameEngineV2
         public static long deltaTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
         private static long framecount = 0;
         private static long runTime;
+        private static long frameOffset = 0;
 
         static void Main()
         {
@@ -131,7 +132,7 @@ namespace GameEngineV2
                     Console.Clear();
                 }
 
-                while (DateTimeOffset.Now.ToUnixTimeMilliseconds() - deltaTime < 1000 / FRAMERATE) { }
+                while (DateTimeOffset.Now.ToUnixTimeMilliseconds() - deltaTime < 1000 / FRAMERATE + frameOffset) { }
 
                 Display();
                
@@ -304,7 +305,15 @@ namespace GameEngineV2
             average /= runTimes.Count;
             average = 1000f / average;
             FRAMERATE_NOW = average;
-
+            
+            if (average < FRAMERATE)
+            {
+                frameOffset--;
+            } else if (average > FRAMERATE)
+            {
+                frameOffset++;
+            }
+            
             if (DEBUG_MODE == Debug.Full || DEBUG_MODE == Debug.Partial)
             {              
                 output += $"\nFramerate: {Math.Round(average, 1)}       \n";
