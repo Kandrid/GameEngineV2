@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GameEngineV2
 {
@@ -198,7 +199,7 @@ namespace GameEngineV2
 
         private static void VelocityUpdate()
         {
-            foreach (Entity entity in Entity.Entities)
+            Parallel.ForEach(Entity.Entities, entity =>
             {
                 if (entity.ExactX + entity.Vx > MAP_WIDTH && entity.Vx != 0)
                 {
@@ -207,7 +208,8 @@ namespace GameEngineV2
                 else if (entity.ExactX + entity.Vx < 0 && entity.Vx != 0)
                 {
                     entity.X = 0;
-                } else
+                }
+                else
                 {
                     entity.X = entity.ExactX + entity.Vx;
                 }
@@ -219,7 +221,8 @@ namespace GameEngineV2
                 else if (entity.ExactY + entity.Vy < 0 && entity.Vy != 0)
                 {
                     entity.Y = 0;
-                } else
+                }
+                else
                 {
                     entity.Y = entity.ExactY + entity.Vy;
                 }
@@ -229,7 +232,7 @@ namespace GameEngineV2
                     child.X = child.ExactX + entity.Vx;
                     child.Y = child.ExactY + entity.Vy;
                 }
-            }
+            });
         }
 
         private static void Display()

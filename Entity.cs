@@ -7,6 +7,7 @@ namespace GameEngineV2
 {
     public class Entity
     {
+        const int MAX = 100000;
         private static Entity Access(string name)
         {
             foreach (Entity entity in Entities)
@@ -59,7 +60,7 @@ namespace GameEngineV2
             yFloat = y;
             this.Vx = Vx;
             this.Vy = Vy;
-            if (Entities.Count < 50000)
+            if (Entities.Count < MAX)
             {
                 Entities.Add(this);
             }
@@ -76,7 +77,7 @@ namespace GameEngineV2
             yFloat = y;
             this.Vx = Vx;
             this.Vy = Vy;
-            if (Entities.Count < 50000)
+            if (Entities.Count < MAX)
             {
                 Entities.Add(this);
             }
@@ -92,7 +93,7 @@ namespace GameEngineV2
             yFloat = y;
             this.Vx = Vx;
             this.Vy = Vy;
-            if (Entities.Count < 50000)
+            if (Entities.Count < MAX)
             {
                 Entities.Add(this);
             }
@@ -108,7 +109,73 @@ namespace GameEngineV2
             yFloat = y;
             this.Vx = Vx;
             this.Vy = Vy;
-            if (Entities.Count < 50000)
+            if (Entities.Count < MAX)
+            {
+                Entities.Add(this);
+            }
+        }
+
+        public Entity(string name, char symbol, float x, float y, float Vx = 0, float Vy = 0)
+        {
+            this.name = name;
+            this.symbol = symbol;
+            category = "";
+            this.x = (int)x;
+            this.y = (int)y;
+            xFloat = x;
+            yFloat = y;
+            this.Vx = Vx;
+            this.Vy = Vy;
+            if (Entities.Count < MAX)
+            {
+                Entities.Add(this);
+            }
+        }
+
+        public Entity(string name, char symbol, string category, float x, float y, float Vx = 0, float Vy = 0)
+        {
+            this.name = name;
+            this.symbol = symbol;
+            this.category = category;
+            this.x = (int)x;
+            this.y = (int)y;
+            xFloat = x;
+            yFloat = y;
+            this.Vx = Vx;
+            this.Vy = Vy;
+            if (Entities.Count < MAX)
+            {
+                Entities.Add(this);
+            }
+        }
+
+        public Entity(char symbol, float x, float y, float Vx = 0, float Vy = 0)
+        {
+            this.symbol = symbol;
+            this.x = (int)x;
+            this.y = (int)y;
+            category = "";
+            xFloat = x;
+            yFloat = y;
+            this.Vx = Vx;
+            this.Vy = Vy;
+            if (Entities.Count < MAX)
+            {
+                Entities.Add(this);
+            }
+        }
+
+        public Entity(char symbol, string category, float x, float y, float Vx = 0, float Vy = 0)
+        {
+            this.symbol = symbol;
+            this.x = (int)x;
+            this.y = (int)y;
+            this.category = category;
+            xFloat = x;
+            yFloat = y;
+            this.Vx = Vx;
+            this.Vy = Vy;
+            if (Entities.Count < MAX)
             {
                 Entities.Add(this);
             }
